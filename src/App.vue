@@ -94,12 +94,6 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :params="[{name:'useXHtml', default:'true', type:Boolean}]"
                 :value="newlineText.nl2br()+'\n'+newlineText.nl2br(false)"/>
 
-        <Output method="pascalCase"
-                description="Formats a string in pascal case."
-                example="example.pascalCase();"
-                :data="sampleText"
-                :value="sampleText.pascalCase()"/>
-
         <Output method="onlyLetters"
                 description="This will remove any character that is not a letter."
                 example="example.onlyLetters();
@@ -115,6 +109,12 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :data="numbersAndLetters"
                 :params="[{name:'whiteList', default: '[]', type:Array}]"
                 :value="numbersAndLetters.onlyNumbers()+'\n'+numbersAndLetters.onlyNumbers(['.'])"/>
+
+        <Output method="pascalCase"
+                description="Formats a string in pascal case."
+                example="example.pascalCase();"
+                :data="sampleText"
+                :value="sampleText.pascalCase()"/>
 
         <Output method="pluralize"
                 description="This will add a plural character based off the numeric interval."

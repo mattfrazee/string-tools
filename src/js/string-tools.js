@@ -36,11 +36,28 @@ String.prototype.pascalCase = function () {
 String.prototype.pluralize = function (count, postfix = 's', countTrigger = 1) {
     return count === countTrigger ? `${this}` : `${this}${postfix}`;
 }
-String.prototype.shuffle = function () {
-    let shuffle = [...this];
+String.prototype.shuffle = function (shuffleEachWord = true) {
     const getRandomValue = (i, N) => Math.floor(Math.random() * (N - i) + i);
-    shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
-    return shuffle.join('');
+    if (shuffleEachWord) {
+        const words = this.words();
+        words.forEach((word, wordId) => {
+            let shuffle = [...word];
+            shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
+            words[wordId] = shuffle.join('');
+        });
+        return words.join(' ');
+    }
+    else {
+        let shuffle = [...this];
+        shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
+        return shuffle.join('');
+    }
+}
+String.prototype.shuffleString = function () {
+    return this.shuffle(false);
+}
+String.prototype.shuffleWords = function () {
+    return this.shuffle(true);
 }
 String.prototype.stripTags = function () {
     const div = document.createElement('div');
