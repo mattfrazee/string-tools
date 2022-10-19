@@ -4,6 +4,7 @@ import {ref} from "vue";
 import './js/string-tools';
 
 const sampleText = ref('The quick brown fox jumped over the lazy dog.');
+const longString    = 'How vexingly quick daft zebras jump! Pack my box with 5 dozen liquor jugs.';
 const newlineText = ref('The quick brown \nfox jumped over \nthe lazy dog.');
 const htmlText = ref('<div class="text-center">The five boxing wizards <em>jump quickly</em>.</div>');
 const pluralText = ref('Box');
@@ -124,8 +125,27 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :params="[{name:'count', type:Number}, {name:'postfix', default:'s', type:String}, {name:'countTrigger', default:'1', type:Number}]"
                 :value="pluralText.pluralize(1, 'es')+'\n'+pluralText.pluralize(4, 'es')"/>
 
+        <Output method="shuffle"
+                description="This will randomly shuffle characters in a string."
+                example="example.shuffle();"
+                :data="sampleText"
+                :params="[{name:'shuffleEachWord', type:Boolean, default: 'true'}]"
+                :value="sampleText.shuffle()"/>
+
+        <Output method="shuffleString"
+                description="Alias of `shuffle(false)`. This will randomly shuffle all the characters in a string."
+                example="example.shuffleString();"
+                :data="sampleText"
+                :value="sampleText.shuffleString()"/>
+
+        <Output method="shuffleWords"
+                description="Alias of `shuffle(true)`. This will randomly shuffle all the characters bound from each word."
+                example="example.shuffleWords();"
+                :data="sampleText"
+                :value="sampleText.shuffleWords()"/>
+
         <Output method="stripTags"
-                description="This is similar to the php function `strip_tags()` and will remove all html elements, whilest keeping the inner text."
+                description="This is similar to the php function `strip_tags()` and will remove all html elements, while keeping the inner text."
                 example="example.stripTags();"
                 :data="htmlText"
                 :value="htmlText.stripTags()"/>
@@ -163,11 +183,11 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :data="sampleText"
                 :value="sampleText.upperCase()"/>
 
-        <Output method="urlSlug"
+        <Output method="uriSlug"
                 description="Create a url formatted string that consists of only numbers and letters separated by a delimiter."
-                example="sampleText.urlSlug();"
+                example="sampleText.uriSlug();"
                 :data="sampleText"
-                :value="sampleText.urlSlug()"
+                :value="sampleText.uriSlug()"
                 :params="[{name:'delimiter', default:'', type: String}]"/>
 
         <Output method="wordCount"
@@ -179,9 +199,11 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
         <Output
             method="words"
             description="This will result in an array of the words in a given string."
-            example="sampleText.words();"
-            :data="sampleText"
-            :value='"[\""+sampleText.words().join("\", \"")+"\"]"'/>
+            example="example.words();
+            example.words(true, ['!'], undefined, 'upperCase')"
+            :data="longString"
+            :params="[{name:'onlyAlphabeticCharacters', default:'false', type: Boolean}, {name:'additionalCharacters', default:'[]', type: Array}, {name:'separator', default:' ', type: String}, {name:'formatCase', default:'null', type: String}]"
+            :value='"[\""+longString.words().join("\", \"")+"\"]\n[\""+longString.words(true, ["!"], undefined, "upperCase").join("\", \"")+"\"]"'/>
       </div>
 
     </div>

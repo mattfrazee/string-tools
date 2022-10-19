@@ -10,6 +10,32 @@ String.prototype.capitalize = function (startLowerCase = false) {
     return this.charAt(0).upperCase() + this.slice(1).if(startLowerCase, (string) => string.lowerCase());
     // return this.charAt(0).upperCase() + this.slice(1).lowerCase();
 }
+String.prototype.decodeHtmlEntities = function () {
+    let ele = document.createElement('div');
+    ele.innerHTML = this;
+    const res = ele.innerText;
+    ele.remove();
+    return res;
+}
+String.prototype.decodeSpecialCharacters = function () {
+    return this.replace(/(&#(\d+);)/g, (match, capture, charCode) => String.fromCharCode(charCode));
+}
+String.prototype.decodeUri = function () {
+    return window.decodeURI(this);
+}
+String.prototype.encodeHtmlEntities = function () {
+    let ele = document.createElement('div');
+    ele.innerText = this;
+    const res = ele.innerHTML;
+    ele.remove();
+    return res;
+}
+String.prototype.encodeSpecialCharacters = function () {
+    return this.replace(/[\u0080-\u024F]/g, (v) => '&#'+v.charCodeAt()+';');
+}
+String.prototype.encodeUri = function () {
+    return window.encodeURI(this);
+}
 String.prototype.headingCase = function (startLowerCase = false, ignoredWords = ['a', 'and', 'as', 'at', 'but', 'by', 'etc', 'for', 'if', 'in', 'into', 'is', 'nor', 'of', 'on', 'onto', 'or', 'so', 'the', 'to']) {
     return this.words().map((word, id) => ignoredWords.includes(word) && id !== 0 ? word : word.capitalize(startLowerCase)).join(' ');
 }
@@ -79,7 +105,7 @@ String.prototype.truncateWords = function (wordLength, clamp = '') {
 String.prototype.upperCase = function () {
     return this.toUpperCase();
 }
-String.prototype.urlSlug = function (delimiter = '-') {
+String.prototype.uriSlug = function (delimiter = '-') {
     return !!this ? this.toLowerCase()
         .replaceAll(/[^a-z0-9-\s]+/g, '')
         .trim()
@@ -88,6 +114,25 @@ String.prototype.urlSlug = function (delimiter = '-') {
 String.prototype.wordCount = function () {
     return this.words().length;
 }
-String.prototype.words = function () {
-    return this.split(' ').filter(item => !!item);
+String.prototype.words = function (onlyAlphabeticCharacters = false, additionalCharacters = [], separator = ' ', formatCase = null) {
+    return this
+        .if(onlyAlphabeticCharacters, (str) => str.onlyLetters([separator, ...additionalCharacters]))
+        .split(separator)
+        .filter(word => !!word)
+        .map(word => {
+            return word.if(!!formatCase, (str) => {
+                switch(formatCase) {
+                    case 'camelCase':
+                        return str.camelCase();
+                    case 'lowerCase':
+                        return str.lowerCase();
+                    case 'pascalCase':
+                        return str.pascalCase();
+                    case 'upperCase':
+                        return str.upperCase();
+                    default:
+                        return str;
+                }
+            })
+        });
 }

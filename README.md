@@ -66,6 +66,84 @@ sampleString.capitalize();
 ```
 
 ---
+### decodeHtmlEntities()
+
+Returns: `String`
+
+Convert HTML entities to their corresponding characters.
+
+**Example:**
+
+```javascript
+sampleString.decodeHtmlEntities();
+```
+
+---
+### decodeSpecialCharacters()
+
+Returns: `String`
+
+Convert special HTML entities back to characters.
+
+**Example:**
+
+```javascript
+sampleString.decodeSpecialCharacters();
+```
+
+---
+### decodeUri()
+
+Returns: `String`
+
+Decodes an encoded URI.
+
+**Example:**
+
+```javascript
+sampleString.decodeUri();
+```
+
+---
+### encodeHtmlEntities()
+
+Returns: `String`
+
+Convert all applicable characters to HTML entities.
+
+**Example:**
+
+```javascript
+sampleString.encodeHtmlEntities();
+```
+
+---
+### encodeSpecialCharacters()
+
+Returns: `String`
+
+Convert special characters to HTML entities.
+
+**Example:**
+
+```javascript
+sampleString.encodeSpecialCharacters();
+```
+
+---
+### encodeUri()
+
+Returns: `String`
+
+Encodes a URI by replacing each instance of certain characters representing the UTF-8 encoding of the character.
+
+**Example:**
+
+```javascript
+sampleString.encodeUri();
+```
+
+---
 ### headingCase(startLowerCase = false, ignoredWords = ['a', 'and', 'as', 'at', 'but', 'by', 'etc', 'for', 'if', 'in', 'into', 'is', 'nor', 'of', 'on', 'onto', 'or', 'so', 'the', 'to'])
 
 Parameters: `Boolean`, `Array` Returns: `String`
@@ -294,16 +372,16 @@ sampleString.upperCase();
 ```
 
 ---
-### urlSlug(delimiter = '-')
+### uriSlug(delimiter = '-')
 
 Parameters: `String` Returns: `String`
 
-Create a url formatted string that consists of only numbers and letters separated by a delimiter.
+Create a uri formatted string that consists of only numbers and letters separated by a delimiter.
 
 **Example:**
 
 ```javascript
-shortString.urlSlug();
+shortString.uriSlug();
 ```
 
 ---
@@ -321,9 +399,9 @@ longString.wordCount();
 ```
 
 ---
-### words()
+### words(onlyAlphabeticCharacters = false, additionalCharacters = [], separator = ' ', formatCase = null)
 
-Returns: `Array`
+Parameters: `Boolean`, `Array`, `String`, `String` Returns: `Array`
 
 This will result in an array of the words in a given string.
 
@@ -331,4 +409,5 @@ This will result in an array of the words in a given string.
 
 ```javascript
 longString.words();
+longString.words(true, ['!'], undefined, 'upperCase');
 ```
