@@ -242,11 +242,11 @@ sampleString.pascalCase();
 ```
 
 ---
-### pluralize(count, postfix = 's', countTrigger = 1)
+### pluralize(interval, postfix = 's', removeLastCharacter = false, pluralInterval = 1)
 
 Parameters: `Number`, `String`, `Number` Returns: `String`
 
-This will add a plural character based off the numeric interval.
+This will add a plural character based off the numeric interval. `pluralInterval` is the integer of when the postfix is applied.
 
 **Example:**
 
@@ -255,11 +255,24 @@ sampleString.pluralize(2);
 ```
 
 ---
+### randomCase()
+
+Returns: `String`
+
+An alias of toLowerCase().
+
+**Example:**
+
+```javascript
+sampleString.lowerCase();
+```
+
+---
 ### shuffle(shuffleEachWord = true)
 
 Parameters: `Boolean` Returns: `String`
 
-This will randomly shuffle characters in a string.
+This will randomly shuffle characters in a string, though, spaces stay intact.
 
 **Example:**
 

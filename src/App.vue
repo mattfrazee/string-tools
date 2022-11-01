@@ -14,30 +14,30 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
 
 <template>
   <div class="grid grid-cols-1 items-center justify-center h-full">
-    <div class="pt-20 pb-10">
-      <h1 style="font-family:'Bebas Neue'" class="text-6xl -font-thin md:w-3/4 mx-auto">
+    <div class="pt-20 pb-10 px-8 md:px-0">
+      <h1 class="logo">
         String <span class="text-slate-400">Prototypes</span>
       </h1>
       <p class="text-slate-400 text-xs -mt-1 md:w-3/4 mx-auto">By: Matt Frazee</p>
 
       <div class="mx-auto md:w-3/4 my-20">
-        <label class="mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest">Sample Text</label>
+        <label class="sample-text-label">Sample Text</label>
         <input
-            class="block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 container bg-transparent font-mono mb-10"
+            class="sample-text-input"
             v-model="sampleText">
-        <label class="mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest">Plural Text</label>
+        <label class="sample-text-label">Plural Text</label>
         <input
-            class="block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 container bg-transparent font-mono mb-10"
+            class="sample-text-input"
             v-model="pluralText">
-        <label class="mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest">HTML Text</label>
+        <label class="sample-text-label">HTML Text</label>
         <textarea
             rows="2"
-            class="block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 container bg-transparent font-mono resize-none mb-10"
+            class="sample-text-input"
             v-model="htmlText"></textarea>
-        <label class="mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest">Multiline Text</label>
+        <label class="sample-text-label">Multiline Text</label>
         <textarea
             rows="3"
-            class="block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 container bg-transparent font-mono resize-none mb-10"
+            class="sample-text-input"
             v-model="newlineText"></textarea>
       </div>
 
@@ -53,32 +53,31 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 description="Capitalizes the first letter in a string of text."
                 example="example.capitalize();"
                 :data="sampleText"
-                :params="[{name:'startLowerCase', type:Boolean, default: false}]"
+                :params="[
+                    {name:'startLowerCase', type:Boolean, default: false}
+                ]"
                 :value="sampleText.capitalize()"/>
 
         <Output method="headingCase"
-                description="A conditional function to modify the text under a certain condition."
-                example="example.headingCase();"
+                description="This will return a string with a proper title case format. You can control which words that should not have a case change."
+                example="example.headingCase();
+                example.headingCase(true, []);"
                 :data="sampleText"
                 :params="[
-                    {
-                      name:'startLowerCase',
-                      type:Boolean,
-                      default: false
-                      },
-                    {
-                      name:'ignoredWords',
-                      type:Array,
-                      default: '[\''+['a', 'and', 'as', 'at', 'but', 'by', 'etc', 'for', 'if', 'in', 'into', 'is', 'nor', 'of', 'on', 'onto', 'or', 'so', 'the', 'to'].join('\', \'')+'\']'
-                    }]"
-                :value="sampleText.headingCase()+'\n'"/>
+                    {name:'startLowerCase', type:Boolean, default: false},
+                    {name:'ignoredWords', type:Array, default: '[\''+['a', 'and', 'as', 'at', 'but', 'by', 'etc', 'for', 'if', 'in', 'into', 'is', 'nor', 'of', 'on', 'onto', 'or', 'so', 'the', 'to'].join('\', \'')+'\']'}
+                ]"
+                :value="sampleText.headingCase()+'\n'+sampleText.headingCase(true, [])"/>
 
         <Output method="if"
                 description="A conditional function to modify the text under a certain condition."
                 example="example.if(1 === 2, text => text.pascalCase());
                 example.if(1 === 1, text => text.upperCase());"
                 :data="sampleText"
-                :params="[{name:'condition', type:Boolean}, {name:'callback', type:(function(){}).constructor}]"
+                :params="[
+                    {name:'condition', type:Boolean},
+                    {name:'callback', type:(function(){}).constructor}
+                ]"
                 :value="sampleText.if(1 === 2, text => text.pascalCase())+'\n'+sampleText.if(1 === 1, text => text.upperCase())"/>
 
         <Output method="lowerCase"
@@ -92,7 +91,9 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 example="example.nl2br();
                 example.nl2br(false);"
                 :data="newlineText"
-                :params="[{name:'useXHtml', default:'true', type:Boolean}]"
+                :params="[
+                    {name:'useXHtml', default:'true', type:Boolean}
+                ]"
                 :value="newlineText.nl2br()+'\n'+newlineText.nl2br(false)"/>
 
         <Output method="onlyLetters"
@@ -100,15 +101,19 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 example="example.onlyLetters();
                 example.onlyLetters([' ', '-']);"
                 :data="numbersAndLetters"
-                :params="[{name:'whiteList', default: '[]', type:Array}]"
-                :value="numbersAndLetters.onlyLetters()+'\n'+numbersAndLetters.onlyLetters([' ', '-'])"/>
+                :params="[
+                    {name:'whiteList', default: '[]', type:Array}
+                ]"
+                :value="numbersAndLetters.onlyLetters() + '\n' + numbersAndLetters.onlyLetters([' ', '-'])"/>
 
         <Output method="onlyNumbers"
                 description="This will remove any character that is not a number."
                 example="example.onlyNumbers();
                 example.onlyNumbers(['.']);"
                 :data="numbersAndLetters"
-                :params="[{name:'whiteList', default: '[]', type:Array}]"
+                :params="[
+                    {name:'whiteList', default: '[]', type:Array}
+                ]"
                 :value="numbersAndLetters.onlyNumbers()+'\n'+numbersAndLetters.onlyNumbers(['.'])"/>
 
         <Output method="pascalCase"
@@ -120,16 +125,35 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
         <Output method="pluralize"
                 description="This will add a plural character based off the numeric interval."
                 example="example.pluralize(1, 'es');
-                example.pluralize(4, 'es');"
+                example.pluralize(4, 'es');
+                'Grape'.pluralize(4);
+                'Bunny'.pluralize(2, 'ies', true);"
                 :data="pluralText"
-                :params="[{name:'count', type:Number}, {name:'postfix', default:'s', type:String}, {name:'countTrigger', default:'1', type:Number}]"
-                :value="pluralText.pluralize(1, 'es')+'\n'+pluralText.pluralize(4, 'es')"/>
+                :params="[
+                    {name:'interval', type:Number},
+                    {name:'postfix', default:'s', type:String},
+                    {name:'removeLastCharacter', default:'false', type:Boolean},
+                    {name:'pluralInterval', default:'1', type:Number}
+                ]"
+                :value="
+                pluralText.pluralize(1, 'es') + '\n' +
+                pluralText.pluralize(4, 'es') + '\n' +
+                'Grape'.pluralize(4) + '\n' +
+                'Bunny'.pluralize(2, 'ies', true)"/>
+
+        <Output method="randomCase"
+                description="This will randomly change the case of each character."
+                example="example.randomCase();"
+                :data="sampleText"
+                :value="sampleText.randomCase()"/>
 
         <Output method="shuffle"
                 description="This will randomly shuffle characters in a string."
                 example="example.shuffle();"
                 :data="sampleText"
-                :params="[{name:'shuffleEachWord', type:Boolean, default: 'true'}]"
+                :params="[
+                    {name:'shuffleEachWord', type:Boolean, default: 'true'}
+                ]"
                 :value="sampleText.shuffle()"/>
 
         <Output method="shuffleString"
@@ -167,43 +191,66 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 example="example.truncateCharacters(18, '...');
                 example.truncateCharacters(10, '...', false);"
                 :data="sampleText"
-                :params="[{name:'characterLength', type: Number}, {name:'clamp', default:'', type: String}, {name:'ignoreWhitespace', default:'true', type: Boolean}]"
+                :params="[
+                    {name:'characterLength', type: Number},
+                    {name:'clamp', default:'', type: String},
+                    {name:'ignoreWhitespace', default:'true', type: Boolean}
+                ]"
                 :value="sampleText.truncateCharacters(18, '...')+'\n'+sampleText.truncateCharacters(10, '...', false)"/>
 
         <Output method="truncateWords"
                 description="This will only display a certain amount of words before the postfix."
-                example="sampleText.truncateWords(5, '...')"
+                example="example.truncateWords(5, '...')"
                 :data="sampleText"
-                :params="[{name:'wordLength', type: Number}, {name:'clamp', default:'', type: String}]"
+                :params="[
+                    {name:'wordLength', type: Number},
+                    {name:'clamp', default:'', type: String}
+                ]"
                 :value="sampleText.truncateWords(5, '...')"/>
 
         <Output method="upperCase"
                 description="An alias of toUpperCase()."
-                example="sampleText.upperCase();"
+                example="example.upperCase();"
                 :data="sampleText"
                 :value="sampleText.upperCase()"/>
 
         <Output method="uriSlug"
                 description="Create a url formatted string that consists of only numbers and letters separated by a delimiter."
-                example="sampleText.uriSlug();"
+                example="example.uriSlug();
+                example.uriSlug('_');"
                 :data="sampleText"
-                :value="sampleText.uriSlug()"
-                :params="[{name:'delimiter', default:'', type: String}]"/>
+                :params="[
+                    {name:'delimiter', default:'-', type: String}
+                 ]"
+                :value="`${sampleText.uriSlug()}
+                ${sampleText.uriSlug('_')}`"/>
 
         <Output method="wordCount"
                 description="The number of words that are separated by a space."
-                example="sampleText.wordCount();"
+                example="example.wordCount();
+                example.wordCount('a', word => word.onlyLetters())"
                 :data="sampleText"
-                :value="sampleText.wordCount()"/>
+                return-type="Number"
+                :params="[
+                    {name:'separator', default:' ', type: String},
+                    {name:'wordMap', type: (function(){}).constructor}
+                ]"
+                :value='`${sampleText.wordCount()}
+                ${sampleText.wordCount("a", word => word.onlyLetters())}`'/>
 
         <Output
             method="words"
             description="This will result in an array of the words in a given string."
             example="example.words();
-            example.words(true, ['!'], undefined, 'upperCase')"
+            example.words(undefined, word => word.onlyLetters().upperCase())"
             :data="longString"
-            :params="[{name:'onlyAlphabeticCharacters', default:'false', type: Boolean}, {name:'additionalCharacters', default:'[]', type: Array}, {name:'separator', default:' ', type: String}, {name:'formatCase', default:'null', type: String}]"
-            :value='"[\""+longString.words().join("\", \"")+"\"]\n[\""+longString.words(true, ["!"], undefined, "upperCase").join("\", \"")+"\"]"'/>
+            return-type="Array"
+            :params="[
+                {name:'separator', default:' ', type: String},
+                {name:'wordMap', type: (function(){}).constructor}
+            ]"
+            :value='`["${longString.words().join("\", \"")}"]
+            ["${longString.words(undefined, word => word.onlyLetters().upperCase()).join("\", \"")}"]`'/>
       </div>
 
     </div>

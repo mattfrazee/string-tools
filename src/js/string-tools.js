@@ -59,8 +59,14 @@ String.prototype.onlyNumbers = function (whiteList = []) {
 String.prototype.pascalCase = function () {
     return this.charAt(0).upperCase() + this.camelCase().slice(1);
 }
-String.prototype.pluralize = function (count, postfix = 's', countTrigger = 1) {
-    return count === countTrigger ? `${this}` : `${this}${postfix}`;
+String.prototype.pluralize = function (interval, postfix = 's', removeLastCharacter = false, pluralInterval = 1) {
+    const text = this.if(removeLastCharacter, text => interval === pluralInterval ? text : text.slice(0, -1));
+    return interval === pluralInterval ? `${text}` : `${text}${postfix}`;
+}
+String.prototype.randomCase = function () {
+    return this.split('').map((char) =>
+        Math.round(Math.random()) ? char.upperCase() : char.lowerCase()
+    ).join('');
 }
 String.prototype.shuffle = function (shuffleEachWord = true) {
     const getRandomValue = (i, N) => Math.floor(Math.random() * (N - i) + i);
@@ -111,28 +117,12 @@ String.prototype.uriSlug = function (delimiter = '-') {
         .trim()
         .replaceAll(/\s+/g, delimiter) : '';
 }
-String.prototype.wordCount = function () {
-    return this.words().length;
+String.prototype.wordCount = function (separator = ' ', wordMap) {
+    return this.words(separator, wordMap).length;
 }
-String.prototype.words = function (onlyAlphabeticCharacters = false, additionalCharacters = [], separator = ' ', formatCase = null) {
+String.prototype.words = function (separator = ' ', wordMap) {
     return this
-        .if(onlyAlphabeticCharacters, (str) => str.onlyLetters([separator, ...additionalCharacters]))
         .split(separator)
-        .filter(word => !!word)
-        .map(word => {
-            return word.if(!!formatCase, (str) => {
-                switch(formatCase) {
-                    case 'camelCase':
-                        return str.camelCase();
-                    case 'lowerCase':
-                        return str.lowerCase();
-                    case 'pascalCase':
-                        return str.pascalCase();
-                    case 'upperCase':
-                        return str.upperCase();
-                    default:
-                        return str;
-                }
-            })
-        });
+        .map(word => typeof wordMap === 'function' ? wordMap(word) : word)
+        .filter(word => !!word);
 }

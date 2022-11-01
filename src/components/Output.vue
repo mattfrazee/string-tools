@@ -7,6 +7,7 @@ const props = defineProps({
   description: String,
   method: String,
   example: String,
+  returnType: String,
   params: Array,
   value: {},
 })
@@ -28,8 +29,8 @@ const paramText = computed(() => {
 </script>
 
 <template>
-  <div :id="method" class="output-container block pt-10 mx-auto w-3/4">
-    <h2 class="font-mono mb-2 text-2xl italic">{{ method }}(<span class="text-slate-400">{{ paramText }}</span>)</h2>
+  <div :id="method" class="output-container block pt-10 mx-auto md:w-3/4">
+    <h2 class="font-mono mb-2 text-xl md:text-2xl italic">{{ method }}(<span class="text-base md:text-xl text-slate-400">{{ paramText }}</span>)</h2>
     <p class="mb-2" v-if="!!params">Parameters:
       <span class="inline-block" v-for="(param, id) in params">
         <span class="ml-1 mr-2" v-if="id > 0">,</span>
@@ -43,20 +44,20 @@ const paramText = computed(() => {
     </p>
     <p class="mb-2">Returns:
       <span class="px-2 py-1 rounded font-mono text-sm bg-slate-800 inline-block">
-        {{ value.constructor.name }}
+        {{ returnType ?? value.constructor.name }}
       </span>
     </p>
     <p class="mb-10 text-lg">{{ description }}</p>
     <CodeBlock v-if="data" class="mb-4">
-      <p class="comment">// Data:</p>
+      <p class="comment">// String</p>
       <code class="block whitespace-pre-line">const example = `{{ data }}`;</code>
     </CodeBlock>
     <CodeBlock v-if="example" class="mb-4">
-      <p class="comment">// Usage:</p>
+      <p class="comment">// Usage</p>
       <code class="block whitespace-pre-line">{{ example }}</code>
     </CodeBlock>
     <CodeBlock>
-      <p class="comment">// Output:</p>
+      <p class="comment">// Output</p>
       <code class="whitespace-pre-line">{{ value }}</code>
     </CodeBlock>
   </div>

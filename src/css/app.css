@@ -8,3 +8,16 @@ html, body {
 #app {
     @apply relative h-full min-h-full
 }
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    @apply text-6xl md:w-3/4 mx-auto
+}
+.code-block {
+    @apply block mx-auto rounded-lg p-4 w-full md:container bg-slate-500 font-mono
+}
+.sample-text-label {
+    @apply mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest
+}
+.sample-text-input {
+    @apply block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 w-full md:container bg-transparent font-mono resize-none mb-10
+}
