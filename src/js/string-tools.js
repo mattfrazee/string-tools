@@ -1,6 +1,7 @@
 // String functions
 // By: Matt Frazee
 
+// Prototypes
 String.prototype.camelCase = function () {
     return this.lowerCase().onlyLetters([' ']).replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
         return index === 0 ? word.lowerCase() : word.upperCase();
@@ -41,6 +42,13 @@ String.prototype.headingCase = function (startLowerCase = false, ignoredWords = 
 }
 String.prototype.if = function (condition, callback) {
     return condition && typeof callback === 'function' ? callback(this) : this;
+}
+String.prototype.ifElse = function (condition, ifCallback, elseCallback) {
+    if (condition) {
+        return typeof ifCallback === 'function' ? ifCallback(this) : this;
+    } else {
+        return typeof elseCallback === 'function' ? elseCallback(this) : this;
+    }
 }
 String.prototype.lowerCase = function () {
     return this.toLowerCase();
@@ -88,8 +96,20 @@ String.prototype.shuffle = function (shuffleEachWord = true) {
 String.prototype.shuffleString = function () {
     return this.shuffle(false);
 }
-String.prototype.shuffleWords = function () {
+String.prototype.shuffleLettersInWord = function () {
     return this.shuffle(true);
+}
+String.prototype.shuffleWords = function () {
+    const arr = this.words();
+    // const arr = [...this];
+    let currentIndex = arr.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+    // return arr.join('');
+    return arr.join(' ');
 }
 String.prototype.stripTags = function () {
     const div = document.createElement('div');
@@ -125,4 +145,9 @@ String.prototype.words = function (separator = ' ', wordMap) {
         .split(separator)
         .map(word => typeof wordMap === 'function' ? wordMap(word) : word)
         .filter(word => !!word);
+}
+
+// Methods
+String.randomString = function (length = 8, randomCase = true) {
+    return [...Array(length)].map(() => Math.random().toString(36)[2]).join('').if(randomCase, string => string.randomCase())
 }

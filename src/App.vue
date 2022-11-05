@@ -80,6 +80,18 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 ]"
                 :value="sampleText.if(1 === 2, text => text.pascalCase())+'\n'+sampleText.if(1 === 1, text => text.upperCase())"/>
 
+        <Output method="ifElse"
+                description="A conditional function to modify the text under a certain condition."
+                example="example.ifElse(1 === 1, text => text.pascalCase(), text => text.randomCase());
+                example.ifElse(1 === 2, text => text.pascalCase(), text => text.randomCase());"
+                :data="sampleText"
+                :params="[
+                    {name:'condition', type:Boolean},
+                    {name:'ifCallback', type:(()=>{}).constructor},
+                    {name:'elseCallback', type:(()=>{}).constructor}
+                ]"
+                :value="sampleText.ifElse(1 === 1, text => text.pascalCase(), text => text.randomCase())+'\n'+sampleText.ifElse(1 === 2, text => text.pascalCase(), text => text.randomCase())"/>
+
         <Output method="lowerCase"
                 description="An alias of toLowerCase()."
                 example="example.lowerCase();"
@@ -146,6 +158,15 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 example="example.randomCase();"
                 :data="sampleText"
                 :value="sampleText.randomCase()"/>
+
+        <Output method="String.randomString"
+                description="This will randomly generate a string with letters and numbers."
+                example="String.randomString(10, false);"
+                :params="[
+                    {name:'length', type:Number, default: '8'},
+                    {name:'randomCase', type:Boolean, default: 'true'},
+                ]"
+                :value="String.randomString(10, false)"/>
 
         <Output method="shuffle"
                 description="This will randomly shuffle characters in a string."
