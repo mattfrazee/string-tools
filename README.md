@@ -425,9 +425,9 @@ longString.wordCount();
 ```
 
 ---
-### words(onlyAlphabeticCharacters = false, additionalCharacters = [], separator = ' ', formatCase = null)
+### words(separator = ' ', wordMap = null)
 
-Parameters: `Boolean`, `Array`, `String`, `String` Returns: `Array`
+Parameters: `String`, `Function` Returns: `Array`
 
 This will result in an array of the words in a given string.
 
@@ -435,5 +435,5 @@ This will result in an array of the words in a given string.
 
 ```javascript
 longString.words();
-longString.words(true, ['!'], undefined, 'upperCase');
+longString.words(' ', text => text.upperCase());
 ```
