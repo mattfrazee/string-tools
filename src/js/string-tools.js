@@ -53,6 +53,16 @@ String.prototype.ifElse = function (condition, ifCallback, elseCallback) {
 String.prototype.lowerCase = function () {
     return this.toLowerCase();
 }
+String.prototype.mixWords = function (separator = ' ') {
+    const arr = this.words(separator);
+    let currentIndex = arr.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+    }
+    return arr.join(separator);
+}
 String.prototype.nl2br = function (useXHtml = true) {
     return !!this ? this.replaceAll('\n', (useXHtml ? '<br />' : '<br>')) : '';
 }
@@ -76,40 +86,14 @@ String.prototype.randomCase = function () {
         Math.round(Math.random()) ? char.upperCase() : char.lowerCase()
     ).join('');
 }
-String.prototype.shuffle = function (shuffleEachWord = true) {
+String.prototype.shuffle = function () {
     const getRandomValue = (i, N) => Math.floor(Math.random() * (N - i) + i);
-    if (shuffleEachWord) {
-        const words = this.words();
-        words.forEach((word, wordId) => {
-            let shuffle = [...word];
-            shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
-            words[wordId] = shuffle.join('');
-        });
-        return words.join(' ');
-    }
-    else {
-        let shuffle = [...this];
-        shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
-        return shuffle.join('');
-    }
+    let shuffle = [...this];
+    shuffle.forEach( (elem, i, arr, j = getRandomValue(i, arr.length)) => [arr[i], arr[j]] = [arr[j], arr[i]] );
+    return shuffle.join('');
 }
-String.prototype.shuffleString = function () {
-    return this.shuffle(false);
-}
-String.prototype.shuffleLettersInWord = function () {
-    return this.shuffle(true);
-}
-String.prototype.shuffleWords = function () {
-    const arr = this.words();
-    // const arr = [...this];
-    let currentIndex = arr.length, randomIndex;
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
-    }
-    // return arr.join('');
-    return arr.join(' ');
+String.prototype.shuffleWords = function (separator = ' ') {
+    return this.words(separator).map(word => word.shuffle()).join(separator);
 }
 String.prototype.stripTags = function () {
     const div = document.createElement('div');
@@ -148,6 +132,6 @@ String.prototype.words = function (separator = ' ', wordMap) {
 }
 
 // Methods
-String.randomString = function (length = 8, randomCase = true) {
-    return [...Array(length)].map(() => Math.random().toString(36)[2]).join('').if(randomCase, string => string.randomCase())
+String.randomString = function (length = 8) {
+    return [...Array(length)].map(() => Math.random().toString(36)[2]).join('');
 }

@@ -171,6 +171,19 @@ sampleString.if(1 === 2, text => text.pascalCase());
 ```
 
 ---
+### ifElse(condition, ifCallback, elseCallback)
+
+Parameters: `Boolean`, `Function`, `Function` Returns: `String`
+
+A conditional function to modify the text under a certain condition.
+
+**Example:**
+
+```javascript
+sampleString.ifElse(1 === 2, text => text.upperCase(), text => text.lowerCase());
+```
+
+---
 ### lowerCase()
 
 Returns: `String`
@@ -181,6 +194,19 @@ An alias of toLowerCase().
 
 ```javascript
 sampleString.lowerCase();
+```
+
+---
+### mixWords(separator = ' ')
+
+Parameters: `String` Returns: `String`
+
+This will randomly shuffle all the words in a string.
+
+**Example:**
+
+```javascript
+sampleString.mixWords();
 ```
 
 ---
@@ -268,11 +294,11 @@ sampleString.lowerCase();
 ```
 
 ---
-### shuffle(shuffleEachWord = true)
+### shuffle()
 
-Parameters: `Boolean` Returns: `String`
+Returns: `String`
 
-This will randomly shuffle characters in a string, though, spaces stay intact.
+This will randomly shuffle characters in a string.
 
 **Example:**
 
@@ -281,24 +307,11 @@ sampleString.shuffle();
 ```
 
 ---
-### shuffleString()
+### shuffleWords(separator = ' ')
 
-Returns: `String`
+Parameters: `String` Returns: `String`
 
-Alias of `shuffle(false)`. This will randomly shuffle all the characters in a string.
-
-**Example:**
-
-```javascript
-sampleString.shuffleString();
-```
-
----
-### shuffleWords()
-
-Returns: `String`
-
-Alias of `shuffle(true)`. This will randomly shuffle all the characters bound from each word.
+This will randomly shuffle all the characters bound from each word.
 
 **Example:**
 

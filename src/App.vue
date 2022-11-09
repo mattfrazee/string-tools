@@ -98,6 +98,15 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :data="sampleText"
                 :value="sampleText.lowerCase()"/>
 
+        <Output method="mixWords"
+                description="This will randomly shuffle all the words in a string."
+                example="example.mixWords();"
+                :params="[
+                    {name:'separator', type:String, default: ' '}
+                ]"
+                :data="sampleText"
+                :value="sampleText.mixWords()"/>
+
         <Output method="nl2br"
                 description="This is similar to the php function `nl2br` and will replace all new lines with an html line break."
                 example="example.nl2br();
@@ -161,31 +170,24 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
 
         <Output method="String.randomString"
                 description="This will randomly generate a string with letters and numbers."
-                example="String.randomString(10, false);"
+                example="String.randomString(10);"
                 :params="[
                     {name:'length', type:Number, default: '8'},
-                    {name:'randomCase', type:Boolean, default: 'true'},
                 ]"
-                :value="String.randomString(10, false)"/>
+                :value="String.randomString(10)"/>
 
         <Output method="shuffle"
                 description="This will randomly shuffle characters in a string."
                 example="example.shuffle();"
                 :data="sampleText"
-                :params="[
-                    {name:'shuffleEachWord', type:Boolean, default: 'true'}
-                ]"
                 :value="sampleText.shuffle()"/>
 
-        <Output method="shuffleString"
-                description="Alias of `shuffle(false)`. This will randomly shuffle all the characters in a string."
-                example="example.shuffleString();"
-                :data="sampleText"
-                :value="sampleText.shuffleString()"/>
-
         <Output method="shuffleWords"
-                description="Alias of `shuffle(true)`. This will randomly shuffle all the characters bound from each word."
+                description="This will randomly shuffle all the characters bound from each word."
                 example="example.shuffleWords();"
+                :params="[
+                    {name:'separator', type:String, default: ' '}
+                ]"
                 :data="sampleText"
                 :value="sampleText.shuffleWords()"/>
 
