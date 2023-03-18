@@ -40,11 +40,29 @@ of quartz.`;
 --- 
 ## Methods
 
+### String.randomString(length = 8, includeSpecialCharacters = true)
+
+Parameters: `Number` `Boolean` Returns: `String`
+
+This will generate a string of random cased letters, numbers and special characters.
+```
+['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '`', '~', '-', '_', '+', '=']
+```
+
+**Example:**
+
+```javascript
+String.randomString(12);
+```
+
+--- 
+## Prototypes
+
 ### camelCase()
 
 Returns: `String`
 
-The formats a string in camel case (It is commonly used in web URLs, programming and computer naming conventions).
+Formats a string in camel case (It is commonly used in web URLs, programming and computer naming conventions).
 
 **Example:**
 
@@ -285,12 +303,12 @@ sampleString.pluralize(2);
 
 Returns: `String`
 
-An alias of toLowerCase().
+Randomizes the case for each letter in a string.
 
 **Example:**
 
 ```javascript
-sampleString.lowerCase();
+sampleString.randomCase();
 ```
 
 ---
@@ -337,7 +355,7 @@ htmlString.stripTags();
 
 Returns: `Number`
 
-Converts the string into a filesize. This method is not chainable.
+Converts the string into a filesize. This method is not chainable for strings.
 
 **Example:**
 
@@ -350,7 +368,7 @@ numberString.toBytes();
 
 Returns: `Number`
 
-Converts the string into a number using `parseFloat`. This method is not chainable.
+Converts the string into a number using `parseFloat`. This method is not chainable for strings.
 
 **Example:**
 
@@ -402,7 +420,7 @@ sampleString.upperCase();
 
 Parameters: `String` Returns: `String`
 
-Create a uri formatted string that consists of only numbers and letters separated by a delimiter.
+Creates a uri formatted string that consists of only numbers and letters separated by a delimiter.
 
 **Example:**
 
@@ -416,7 +434,7 @@ shortString.uriSlug();
 Returns: `Number`
 
 This will count the number of words that are separated by a space.
-This method is not chainable
+This method is not chainable for strings.
 
 **Example:**
 

@@ -132,6 +132,12 @@ String.prototype.words = function (separator = ' ', wordMap) {
 }
 
 // Methods
-String.randomString = function (length = 8) {
-    return [...Array(length)].map(() => Math.random().toString(36)[2]).join('');
+String.randomString = function (length = 8, includeSpecialCharacters = true) {
+    const specialCharacters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '`', '~', '-', '_', '+', '='];
+    // Lower or higher this number to control the
+    // odds that a special character will appear.
+    const specialCharacterOdds = 7;
+
+    return [...Array(length)].map(() => Math.random().toString(36)[2].randomCase()
+        .if(includeSpecialCharacters && !Math.floor(Math.random() * specialCharacterOdds), (char) => char = specialCharacters[Math.floor(Math.random() * specialCharacters.length)])).join('');
 }

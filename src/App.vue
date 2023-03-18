@@ -274,9 +274,21 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
             ]"
             :value='`["${longString.words().join("\", \"")}"]
             ["${longString.words(undefined, word => word.onlyLetters().upperCase()).join("\", \"")}"]`'/>
+
+        <Output
+            method="String.randomString"
+            description="This will generate a string of random cased letters, numbers and special characters."
+            example="String.randomString();
+            String.randomString(20, false)"
+            return-type="String"
+            :params="[
+                {name:'length', default:8, type: Number},
+                {name:'includeSpecialCharacters', default:true, type: Boolean}
+            ]"
+            :value='`${String.randomString()}
+            ${String.randomString(20, false)}`'/>
       </div>
 
     </div>
   </div>
-  <!--  <HelloWorld msg="Vite + Vue" />-->
 </template>
