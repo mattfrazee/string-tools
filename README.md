@@ -40,7 +40,7 @@ of quartz.`;
 --- 
 ## Methods
 
-### String.randomString(length = 8, includeSpecialCharacters = true)
+### String.randomString(length = 8, includeSpecialCharacters = true, specialCharacters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '`', '~', '-', '_', '+', '='])
 
 Parameters: `Number` `Boolean` Returns: `String`
 
@@ -52,7 +52,9 @@ This will generate a string of random cased letters, numbers and special charact
 **Example:**
 
 ```javascript
+String.randomString();
 String.randomString(12);
+String.randomString(30, true, ['!','$']);
 ```
 
 --- 
@@ -277,7 +279,7 @@ mixedString.onlyNumbers(['.']);
 
 Returns: `String`
 
-The formats a string in pascal case.
+This formats a string in pascal case.
 
 **Example:**
 
@@ -309,6 +311,21 @@ Randomizes the case for each letter in a string.
 
 ```javascript
 sampleString.randomCase();
+```
+
+---
+### showWhitespaceCharacters()
+
+Returns: `String`
+
+Shows all spaces, tabs, and newlines with a character.
+Only spaces will be replaced with a character.
+Spaces = '◦', Tabs = '⇥', Newlines = '⏎'
+
+**Example:**
+
+```javascript
+sampleString.showWhitespaceCharacters();
 ```
 
 ---
@@ -386,6 +403,7 @@ This will only display a certain amount of characters before the postfix.
 **Example:**
 
 ```javascript
+longString.truncateCharacters(10);
 longString.truncateCharacters(20, '...');
 ```
 
@@ -443,9 +461,9 @@ longString.wordCount();
 ```
 
 ---
-### words(separator = ' ', wordMap = null)
+### words(wordMap = null)
 
-Parameters: `String`, `Function` Returns: `Array`
+Parameters: `Function` Returns: `Array`
 
 This will result in an array of the words in a given string.
 
@@ -453,5 +471,5 @@ This will result in an array of the words in a given string.
 
 ```javascript
 longString.words();
-longString.words(' ', text => text.upperCase());
+longString.words(text => text.upperCase());
 ```

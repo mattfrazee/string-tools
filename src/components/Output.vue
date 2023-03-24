@@ -50,7 +50,7 @@ const paramText = computed(() => {
     <p class="mb-10 text-lg">{{ description }}</p>
     <CodeBlock v-if="data" class="mb-4">
       <p class="comment">// String</p>
-      <code class="block whitespace-pre-line">const example = `{{ data }}`;</code>
+      <code class="block whitespace-pre-wrap">const example = `{{ data }}`;</code>
     </CodeBlock>
     <CodeBlock v-if="example" class="mb-4">
       <p class="comment">// Usage</p>

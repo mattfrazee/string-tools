@@ -4,7 +4,8 @@ import {ref} from "vue";
 import './js/string-tools';
 
 const sampleText = ref('The quick brown fox jumped over the lazy dog.');
-const longString    = 'How vexingly quick daft zebras jump! Pack my box with 5 dozen liquor jugs.';
+const whitespaceText = ref('   The   quick brown  fox\t jumped   over \nthe lazy      dog.   ');
+const longString = ref('How vexingly quick daft zebras jump! Pack my box with 5 dozen liquor jugs.');
 const newlineText = ref('The quick brown \nfox jumped over \nthe lazy dog.');
 const htmlText = ref('<div class="text-center">The five boxing wizards <em>jump quickly</em>.</div>');
 const pluralText = ref('Box');
@@ -29,6 +30,10 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
         <input
             class="sample-text-input"
             v-model="pluralText">
+        <label class="sample-text-label">Whitespace Text</label>
+        <input
+            class="sample-text-input"
+            v-model="whitespaceText">
         <label class="sample-text-label">HTML Text</label>
         <textarea
             rows="2"
@@ -101,9 +106,6 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
         <Output method="mixWords"
                 description="This will randomly shuffle all the words in a string."
                 example="example.mixWords();"
-                :params="[
-                    {name:'separator', type:String, default: ' '}
-                ]"
                 :data="sampleText"
                 :value="sampleText.mixWords()"/>
 
@@ -168,13 +170,17 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 :data="sampleText"
                 :value="sampleText.randomCase()"/>
 
-        <Output method="String.randomString"
-                description="This will randomly generate a string with letters and numbers."
-                example="String.randomString(10);"
-                :params="[
-                    {name:'length', type:Number, default: '8'},
-                ]"
-                :value="String.randomString(10)"/>
+        <Output method="showWhitespaceCharacters"
+                description="Shows all spaces, tabs, and newlines with a character. Only spaces will be replaced with a character. Spaces = '◦', Tabs = '⇥', Newlines = '⏎'"
+                example="example.showWhitespaceCharacters();"
+                :data="whitespaceText"
+                :value="whitespaceText.showWhitespaceCharacters()"/>
+
+        <Output method="removeWhitespace"
+                description="Removes any extra outer and inner whitespaces with a defined value."
+                example="example.removeWhitespace();"
+                :data="whitespaceText"
+                :value="whitespaceText.removeWhitespace()"/>
 
         <Output method="shuffle"
                 description="This will randomly shuffle characters in a string."
@@ -208,6 +214,12 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 example="example.toNumber();"
                 :data="toNumberText"
                 :value="toNumberText.toNumber()"/>
+
+        <Output method="trimWhitespace"
+                description="Removes outer whitespace and replaces inner whitespace with a defined value."
+                example="example.trimWhitespace();"
+                :data="whitespaceText"
+                :value="whitespaceText.trimWhitespace()"/>
 
         <Output method="truncateCharacters"
                 description="This will only display a certain amount of characters before the postfix."
@@ -249,44 +261,40 @@ const numbersAndLetters = ref('A-B-C, 123, Do re mi.');
                 ${sampleText.uriSlug('_')}`"/>
 
         <Output method="wordCount"
-                description="The number of words that are separated by a space."
-                example="example.wordCount();
-                example.wordCount('a', word => word.onlyLetters())"
+                description="The number of words in a given string."
+                example="example.wordCount();"
                 :data="sampleText"
                 return-type="Number"
-                :params="[
-                    {name:'separator', default:' ', type: String},
-                    {name:'wordMap', type: (function(){}).constructor}
-                ]"
-                :value='`${sampleText.wordCount()}
-                ${sampleText.wordCount("a", word => word.onlyLetters())}`'/>
+                :value='`${sampleText.wordCount()}`'/>
 
         <Output
             method="words"
             description="This will result in an array of the words in a given string."
             example="example.words();
-            example.words(undefined, word => word.onlyLetters().upperCase())"
+            example.words(word => word.onlyLetters().upperCase());"
             :data="longString"
             return-type="Array"
             :params="[
-                {name:'separator', default:' ', type: String},
                 {name:'wordMap', type: (function(){}).constructor}
             ]"
             :value='`["${longString.words().join("\", \"")}"]
-            ["${longString.words(undefined, word => word.onlyLetters().upperCase()).join("\", \"")}"]`'/>
+            ["${longString.words(word => word.onlyLetters().upperCase()).join("\", \"")}"]`'/>
 
         <Output
             method="String.randomString"
             description="This will generate a string of random cased letters, numbers and special characters."
             example="String.randomString();
-            String.randomString(20, false)"
+            String.randomString(20, false);
+            String.randomString(4, true, ['#', '$', '!', '@']);"
             return-type="String"
             :params="[
                 {name:'length', default:8, type: Number},
-                {name:'includeSpecialCharacters', default:true, type: Boolean}
+                {name:'includeSpecialCharacters', default:true, type: Boolean},
+                {name:'specialCharacters', default:`['${['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '`', '~', '-', '_', '+', '='].join('\', \'')}']`, type: Array}
             ]"
             :value='`${String.randomString()}
-            ${String.randomString(20, false)}`'/>
+            ${String.randomString(20, false)}
+            ${String.randomString(4, true, ["#","$","!","@"])}`'/>
       </div>
 
     </div>

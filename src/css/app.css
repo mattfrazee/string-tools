@@ -19,5 +19,5 @@ html, body {
     @apply mb-0 text-xs font-bold text-slate-400 uppercase tracking-widest
 }
 .sample-text-input {
-    @apply block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 w-full md:container bg-transparent font-mono resize-none mb-10
+    @apply block mx-auto border-b-2 border-slate-400 py-3 text-xl text-lime-400 w-full md:container bg-transparent font-mono resize-none mb-10 outline-0 selection:bg-gray-800 selection:text-white
 }
